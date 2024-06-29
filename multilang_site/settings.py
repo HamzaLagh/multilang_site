@@ -21,7 +21,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Clé API OpenAI
-OPENAI_API_KEY = 'sk-proj-ire2GVJmfGZcLsWVsejgT3BlbkFJpJGJVz790AqtnDbiJDhs'
 
 # Application definition
 
