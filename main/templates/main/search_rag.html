@@ -1,0 +1,18 @@
+
+<h2>Résultats de la Recherche</h2>
+
+<form method="get">
+    <label for="query">Recherche :</label><br>
+    <input type="text" id="query" name="query"><br><br>
+    <input type="submit" value="Rechercher">
+</form>
+
+{% if query %}
+    <h3>Résultats pour "{{ query }}" :</h3>
+    <ul>
+    {% for result in results.hits.hits %}
+        <li>{{ result._source.title }}</li>
+        <p>{{ result._source.content }}</p>
+    {% endfor %}
+    </ul>
+{% endif %}

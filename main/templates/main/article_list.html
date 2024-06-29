@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <title>Liste des Articles</title>
+    {% load i18n %}
+    {% load static %} 
+    <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+</head>
+<body>
+  <header>
+    <div class="logo">
+        <img src="{% static 'main/images/logo.svg' %}" alt="Logo de votre entreprise">
+    </div>
+    <nav>
+        <ul>
+  
+            <li><form id="language-form" action="{% url 'set_language' %}" method="post">
+              {% csrf_token %}
+              <input name="next" type="hidden" value="{{ redirect_to }}" />
+              <label class="select">
+                  <select id="language-select" name="language">
+                      {% get_current_language as LANGUAGE_CODE %}
+                      {% get_available_languages as LANGUAGES %}
+                      {% get_language_info_list for LANGUAGES as languages %}
+                      {% for language in languages %}
+                          <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                              {{ language.name_local }} ({{ language.code }})
+                          </option>
+                      {% endfor %}
+                  </select>
+              </label>
+          </form></li>
+        </ul>
+    </nav>
+</header>
+
+
+
+
+{% for article in articles %}
+<div class="blog-container">
+    <div class="blog-header">
+        <div class="blog-cover"></div>
+    </div>
+
+    <div class="blog-body">
+        <div class="blog-title">
+            <h1><a href="#">{{ article.title }}</a></h1>
+        </div>
+        <div class="blog-summary">
+            <p>{{ article.content }}</p>
+        </div>
+    </div>
+
+    <div class="blog-footer">
+        <ul>
+            <li class="published-date">{% trans "Publié le" %} {{ article.publication_date }}</li>
+        </ul>
+    </div>
+</div>
+{% endfor %}
+<footer>
+  <div class="footer-content">
+      <p>&copy; 2024 Diot Siaci. Tous droits réservés.</p>
+      <ul class="footer-links">
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+          <li><a href="#">Plan du site</a></li>
+      </ul>
+  </div>
+</footer>
+<script type="text/javascript" src="//use.typekit.net/wtt0gtr.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<script>
+  document.getElementById('language-select').addEventListener('change', function() {
+      document.getElementById('language-form').submit();
+  });
+</script>
+</body>
+</html>
